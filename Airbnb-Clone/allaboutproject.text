@@ -1,0 +1,22 @@
+
+
+navbar:
+- creating navbar using bootstrap
+- applying custom css to navbar
+- sticky-top its bootstrap class for navbar its stick to the top and not moving anywhere
+
+
+footer:
+- creating footer 
+
+index.ejs
+ - all listing page 
+ - import all info about resourt from db in index.ejs page
+ - row-cols-lg-3 this means ek row ke andr jitne bhi column hai large screen mai uspe minimum 3 card ek row mai
+ -  row-cols-md-3  medium screen size hoga tb 3
+ -   row-cols-sm-3  small screen size hoga tb bhi 3 its for mobile website
+ -now when we click on card gone to show page[listing._id is a show page] <a>card</a>
+ -in image if we want to write text we use overlay effect in bootstrap card-image-overlay
+
+
+ styling new listing  means new.ejs page

@@ -1,0 +1,41 @@
+<% layout("/layouts/boilerplate")%>   
+<div class="row mt-3">
+    <div class="col-8 offset-2">
+
+
+    <h3>Listings detail</h3>
+    </div>
+    <div class="card col-6 offset-2 show-card">
+        <div class="card" style="width: 18rem;">
+            <img src="<%=listing.image%>" class="card-img-top show-img" alt="listing image">
+            <div class="card-body">
+              <p class="card-text">
+                <b><%=listing.title%></b> <br>
+                <%=listing.description %> <br>
+                &#8377; <%=listing.price.toLocaleString("en-in")  %> <br>
+                <%=listing.location %> <br>
+                <%=listing.country %> <br>
+            
+            </p>
+            </div>
+          </div>
+    </div>
+    <br>
+
+</div>
+
+<div class="btns row-5">
+    <a href="/listings/<%=listing._id%>/edit" class="btn btn-dark col-1 offset-2 edit-btn ">Edit</a>
+
+
+
+    <form method="post" action="/listings/<%=listing._id%>?_method=delete">
+        <button class=" btn btn-dark offset-5">Delete</button>
+    </form>
+    </div>
+   
+  
+<!-- &#8377; rs symbol in html -->
+ <!-- toLocalString - convert number in string format for the commas
+  let num =123
+  num.toLocalString("en-in") means indian standard -->

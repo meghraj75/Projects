@@ -1,0 +1,35 @@
+<% layout("/layouts/boilerplate")%>   
+<body>
+   <h3>All listings</h3>
+   <!-- <form method="get" action="/listings/new">
+    <button>Create new listings</button>
+   </form>  -->
+   <!-- one time for loop run then it will create one card this will gone util for loop -->
+  <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-3">
+   <%  for(let listing of allListings){ %>
+      <a href="/listings/<%=listing._id%>" class="listing-link">
+      <div class="card">
+         <!-- listing.image means image coming from db -->
+         <img src="<%= listing.image %>"
+          class="card-img-top" alt="listing_image" 
+          style="height: 20rem;" >
+          
+          <div class="card-img-overlay"></div>
+         <div class="card-body">
+           <p class="card-text"><br>
+           <b><%=listing.title%> <br></b>
+            &#8377; <%=listing.price.toLocaleString("en-in")  %>/night
+           </div>
+       </div> 
+      </a>                      
+      <% } %>
+  </div>
+     
+   <!-- <ul>  this we used when we first add all listing from db to frontend 
+    <%  for(let listing of allListings){ %>
+          <li><a href="/listings/<%= listing._id %>"><%= listing.title %></a></li>
+     <% } %>
+  </ul> -->
+
+</body>
+
