@@ -1,0 +1,227 @@
+
+
+navbar:
+- creating navbar using bootstrap
+- applying custom css to navbar
+- sticky-top its bootstrap class for navbar its stick to the top and not moving anywhere
+
+
+footer:
+- creating footer 
+
+index.ejs
+ - all listing page 
+ - import all info about resourt from db in index.ejs page
+ - row-cols-lg-3 this means ek row ke andr jitne bhi column hai large screen mai uspe minimum 3 card ek row mai
+ -  row-cols-md-3  medium screen size hoga tb 3
+ -   row-cols-sm-3  small screen size hoga tb bhi 3 its for mobile website
+ -now when we click on card gone to show page[listing._id is a show page] <a>card</a>
+ -in image if we want to write text we use overlay effect in bootstrap card-image-overlay
+
+
+ styling new listing  means new.ejs page
+
+
+
+ ===============================================
+ Form validation for frontend using bootstrap 
+
+ ========================================
+ custom error handler
+ utils utility related things extra things 
+
+ ==========================================
+ schemma validation
+  ======================================
+  project phase 2
+  
+  Review Model 
+   1:N relation
+  listing1 ---->reviews
+  listing2---->review
+
+  create reviews  
+  1 setting up the review Form  [inside in show.ejs page ]
+  review[rating] review ke andr rating ko input le rhe hai 
+  2 submitting the form ==>review add in db [har review ko pta hona chahiye wo konse listing ke liye create hua hai]
+   
+    validation for reviews 
+    client side 
+    server side:- 
+    problem 
+    we send wrong review from hoppscotch 
+       
+       reviews har ek listing ke sath populate krna hai in show route in app.js
+        const listing = await Listing.findById(id).populate(reviews);
+
+        delete individual review
+
+        when we delete listing our review also delete from collection[review]
+
+=========================================================
+router
+mergeParams:we set in express roturer 
+parent route ko child route ke sath merge krna chahte tb we use this 
+parent route is app.use("/listings/:id/reviews",reviews);
+child route is /,"/:reviewId
+=======================================================
+flash
+====================================================
+
+Authentication and Authorization    
+
+passport use this hashing algo pbkdf2 hashing algo
+
+npm pkg passport 
+
+
+npm i passport-local-mongoose [for mongo db ]
+
+
+app.use(passport.session());"----web application ko pta hona chahiye ek agr ek page se dusre page pr request ja rhi hai toh kya mera same user same req bej rha hai ya 
+diff diff user req bhej rhe hai 
+
+
+passport.use(new LocalStatergy(User.authenticate()));  //passport ke andr hmne apni new local statergy create ki hai [means jitne bhi user aye wo local statergy ki sath authenticate hone chaiye aur un user authenticate uske liye hm authenticate method ka uses krenege]
+
+// use static serialize and deserialize of model for passport session support
+passport.serializeUser(User.serializeUser());  //ek bar user ne login kr liya to use phle hme serialize krna padega user related info store hogyi to use bar bar login nhi krna pdega
+passport.deserializeUser(User.deserializeUser());// pr ek bar user ne apna session khtm kr diya means deserialize user 
+
+
+sign up means register
+
+login means a sign up user authentication 
+
+
+-------
+how to check if user loggin?
+
+functionality kisi bhi listing ko create krne se phle hmara user loggin hona chahiye
+req.authenticate () current user is stored in session [passport method]
+
+if(!req.isAuthenticated()){  //req contain some info releated to user and that trigger is authenticate to check if user loogin or not
+
+//////LOgout/////
+
+using passport req.LOgout();
+
+if logout contain err then call next 
+ req.logOut((err)=>{
+        if(err){
+            next(err)
+        }
+
+      
+if user login the use sirf logout vala option dikahyi deta hai
+
+agr user logged in nhi hota to use signup and log in dikhayi deta hai 
+
+passport store info in req if info is undefined means user is not login 
+if it has some then user is login then it will show logout options 
+
+ //req ke ander jo bhi info hai user hamara currUser store krega
+  res.locals.currUser=req.user;
+
+
+
+  ---------------
+  automatic login after signup
+
+
+  passport has method login() it require twoo parameter 
+  1 registerUser
+  2 call back 
+
+  -----------------
+
+  Listing owner 
+   for Authorization   [konse user ko kya kya krne ki permisssion hai website pe]
+   sari listing ke sath ek owner ko associate krenge 
+   it simply mean jo owene hai listing ka vhi delete kr paye update krpaye
+
+   similar as review jis admi ne review ko create kiya  hai vhi uuse delete kr paye 
+
+  implementation of Authorization
+
+  hide btn of delete and edit  for that user who are not owner of this
+
+  to check 
+  listing ka owner hai kon
+  jo delete krne ki koshishh kr rha hai wo konsa user hai
+    curr user local ke ander exist hona chaiye agr hai to use listing owener ke id ke sath compare kro if both are same then it access delte and edit 
+  <% if ( currUser && currUser._id.equals(listing.owner_.id)) {%>
+
+  --- Authorization for listing
+
+  -------Authorization for reviews
+  1]review ke sath author hona chaiye
+  2]only author has acces to delete review
+
+
+  -----------------------------------------------------------------
+  mvc
+  ===================================================================
+
+  router.route:
+  - functionality means different route hai unke common path hai to jo common path hai unke different verb hai unko hm combine kr sakte hai 
+
+  ============================================================
+  Restyle rating
+  we use library Starability [git]
+
+  ==================================================
+ image upload
+
+ problesm while creating this:-
+ 1' send files to backend
+ 2' bson is datatype to store imag in mongo bt it has some limit [size limit]
+ 
+to resolve this issue wee do this 
+ 1'create form capable to sending files
+ 2.to save file we store files in third party service like aws azure cloud [this give us link to that file ]
+ 3.to save this link in mongo  
+
+ when we sending file from form to db we use enctype="multipartform-data"
+
+ when wee send data from form to backend our backend dos'nt understand what data is come that we use parser that backend understand which is this data [multer:node js middlware primary use handling filex]
+
+ -----------------------------------------------------
+ cloud setup 
+  cloudinary  platfrom like aws
+  .env file :- all the creditial are store in .env file like api key ,api secret,api environmetal variable 
+
+  to access .env we use this lib .env in npm which is to access env code in any file in project 
+
+  npm i cloudinary multer-storage-cloudinary lib 
+
+  [new.ejs]form send data-->backend[parse this data ]-->and image send to cloudinary amd cloudinary store that image give url [in req.file obj ke andr]
+
+  save link mongodb so we modify listing schema bcz before our img that was simple string now we have to one path other is filename 
+
+  ---------------------------------
+  preview image in edit form
+   means we see small image in edit form
+    now we have to set some parameter like hight widhth and blur,quality of image in image url 
+
+    -------------------------------------------------
+    Maps:
+   Mapbox api
+----------------------------------------------------------
+Adding filters in listing model [hw] means when u  add new listing it has various category so choose one category and add in that category and when we click moutains sysbol it will show  us moutains villas etc
+
+category{
+  type:string
+  enum:["mountains","rooms","farsm"] options that say that u add new listing which is occurs in which categry 
+}
+--------------------------------------------------------------
+
+adding ui for tax switch 
+A switch has the markup of a custom checkbox but uses the .form-switch class to render a toggle switch.
+
+-----------------------------------------------------------------
+Search option
+---------------------------------------------------------------
+Deploy a multi cloud database using mongo atlas 
+
+mongodb+srv://megharajnarkhede0:megharaj75@@cluster0.gyl6jtg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
